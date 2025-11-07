@@ -63,22 +63,22 @@ export const deleteFromCart = async (req, res) => {
   }
 };
 
+
 export const checkout = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: MOCK_USER_ID }).populate("items.product");
-    if (!cart || cart.items.length === 0)
-      return res.status(400).json({ message: "Cart empty" });
+    if (!cart || cart.items.length === 0) return res.status(400).json({ message: "Cart empty" });
 
-    // Filter out invalid products
     const validItems = cart.items.filter(i => i.product && i.product.price != null);
-    if (!validItems.length)
-      return res.status(400).json({ message: "No valid products in cart" });
+    if (!validItems.length) return res.status(400).json({ message: "No valid products in cart" });
 
     const total = validItems.reduce((sum, i) => sum + i.product.price * i.qty, 0);
 
-    // Create the order document
+    const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
+
     const order = new Order({
       userId: MOCK_USER_ID,
+      orderId,
       items: validItems.map(i => ({
         product: i.product._id,
         name: i.product.name,
@@ -92,11 +92,11 @@ export const checkout = async (req, res) => {
 
     await order.save();
 
-    // Clear the cart
+    // Clear cart
     cart.items = [];
     await cart.save();
 
-    res.json(order); // return the stored order as receipt
+    res.json(order); 
   } catch (error) {
     console.error("Checkout error:", error.message);
     res.status(500).json({ message: error.message });

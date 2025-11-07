@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import ProductsGrid from "./components/ProductGrid";
 import Cart from "./components/Cart";
 import { addToCart as addToCartAPI, fetchCart } from "./api";
+import Orders from "./components/Orders";
 
 const App = () => {
   const [cart, setCart] = useState({ items: [], total: 0 });
@@ -30,6 +31,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ProductsGrid onAddToCart={handleAddToCart} />} />
           <Route path="/cart" element={<Cart cart={cart} refreshCart={loadCart} loading={loadingCart} />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </main>
     </Router>
