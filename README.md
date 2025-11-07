@@ -158,12 +158,15 @@ mock-ecom-cart/
 <div align="center">
 
 ### Products Page
+![alt text](image.png)
 *Display products in a grid layout with "Add to Cart" buttons*
 
 ### Cart Page
+![alt text](image-1.png)
 *Manage cart items, update quantities, and proceed to checkout*
 
 ### Orders Page
+![alt text](image-2.png)
 *View complete order history with details and timestamps*
 
 </div>
